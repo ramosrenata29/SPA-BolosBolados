@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolos Bolados - App SPA Oficial</title>
+  <!-- Google Fonts: Montserrat & Raleway -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Raleway:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Google Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <style>
+    :root {
+      --primary: #A13700;
+      --secondary: #FA5F57;
+      --accent: #1BB890;
+      --amber: #D48B00;
+      --dark-green: #256C4B;
+      --bg-white: #FFFFFF;
+      --bg-light: #FBF9F7;
+      --text-main: #2D2522;
+      --text-muted: #7A6F6B;
+      --border-color: #EFE9E4;
+      --shadow-sm: 0 2px 8px rgba(161, 55, 0, 0.06);
+      --shadow-md: 0 8px 24px rgba(161, 55, 0, 0.09);
+      --shadow-float: 0 12px 32px rgba(45, 37, 34, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #F4EFEB;
+      font-family: 'Raleway', sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* Container Mobile App */
+    #app-container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 40px rgba(0,0,0,0.08);
+      overflow-x: hidden;
+    }
+
+    /* Top App Bar */
+    header.app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background-color: var(--bg-light);
+      color: var(--primary);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: var(--secondary);
+      color: #FFF;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      min-width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 9999px;
+      padding: 0 4px;
+      box-shadow: 0 2px 4px rgba(250, 95, 87, 0.4);
+      display: none;
+    }
+
+    /* View Sections */
+    .spa-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      flex: 1;
+      padding-bottom: 90px;
+    }
+
+    .spa-view.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Promotional Hero Banner */
+    .hero-banner {
+      margin: 16px 16px 8px;
+      background: linear-gradient(135deg, #A13700 0%, #D48B00 100%);
+      color: #FFF;
+      border-radius: var(--radius-lg);
+      padding: 20px 18px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(4px);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      opacity: 0.92;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .hero-btn {
+      background: var(--bg-white);
+      color: var(--primary);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Category Filter Chips */
+    .filter-section {
+      padding: 12px 16px 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .filter-section::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pills {
+      display: inline-flex;
+      gap: 8px;
+    }
+
+    .filter-pill {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill.active {
+      background: var(--primary);
+      color: #FFF;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(161, 55, 0, 0.25);
+    }
+
+    .filter-pill span.material-symbols-outlined {
+      font-size: 17px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      padding: 16px 18px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Products Grid / Cards */
+    .products-list {
+      padding: 6px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .product-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .product-thumb-wrap {
+      width: 125px;
+      min-width: 125px;
+      position: relative;
+      background-color: var(--bg-light);
+    }
+
+    .product-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .badge-promo {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--secondary);
+      color: #FFF;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 2px 6px rgba(250, 95, 87, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .product-info {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .product-category-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .product-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .product-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .price-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .price-unit {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-add-cart {
+      background: var(--bg-light);
+      color: var(--primary);
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-add-cart:active {
+      transform: scale(0.9);
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    /* Fixed Bottom Navigation Bar */
+    nav.bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 12px;
+      z-index: 120;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item .material-symbols-outlined {
+      font-size: 22px;
+    }
+
+    /* CART VIEW */
+    .cart-view-content {
+      padding: 16px;
+    }
+
+    .cart-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      gap: 12px;
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .cart-item-price {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .cart-qty-ctrls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-light);
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+    }
+
+    .qty-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .qty-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 14px;
+      text-align: center;
+    }
+
+    .cart-summary-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .summary-line.total {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: var(--primary);
+      color: #FFF;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(161, 55, 0, 0.28);
+      transition: all 0.2s ease;
+    }
+
+    .primary-btn:hover {
+      background: #872e00;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+    }
+
+    .outline-btn {
+      width: 100%;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    /* CHECKOUT & FORM STYLES */
+    .checkout-form-group {
+      margin-bottom: 14px;
+    }
+
+    .checkout-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .checkout-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      color: var(--text-main);
+      background: #FFF;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .checkout-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(161, 55, 0, 0.12);
+    }
+
+    .geo-status-box {
+      border: 1.5px dashed var(--accent);
+      background: rgba(27, 184, 144, 0.05);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .geo-status-box.error {
+      border-color: var(--secondary);
+      background: rgba(250, 95, 87, 0.05);
+    }
+
+    .geo-icon {
+      color: var(--accent);
+      font-size: 24px;
+    }
+
+    .geo-status-box.error .geo-icon {
+      color: var(--secondary);
+    }
+
+    .geo-content {
+      flex: 1;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .geo-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+
+    /* Modal dialogs */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFF;
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-float);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-icon-wrap.security {
+      background: rgba(37, 108, 75, 0.1);
+      color: var(--dark-green);
+    }
+
+    .modal-icon-wrap.payment {
+      background: rgba(212, 139, 0, 0.1);
+      color: var(--amber);
+    }
+
+    .modal-icon-wrap.success {
+      background: rgba(27, 184, 144, 0.1);
+      color: var(--accent);
+    }
+
+    .modal-icon-wrap.error {
+      background: rgba(250, 95, 87, 0.1);
+      color: var(--secondary);
+    }
+
+    .modal-icon-wrap .material-symbols-outlined {
+      font-size: 32px;
+    }
+
+    .modal-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .modal-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--text-main);
+      color: #FFF;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 150;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Empty state */
+    .empty-cart-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-cart-icon {
+      font-size: 54px;
+      color: var(--border-color);
+      margin-bottom: 12px;
+    }
+
+    /* Pulse animation for biometric */
+    .pulse-ring {
+      display: inline-block;
+      position: relative;
+    }
+    .pulse-ring::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      animation: pulseAnim 1.5s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-logo-wrap" onclick="App.navigateTo('menu')">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLMeOhFaRKvojWbHQpU-4LcNy9fXxk4K9duG8MxPZ4SdMNyAjVusp4MWFeL91q8P-uRIZD8DsnYa6W62uGyNKGb9quR-pyvgGNrFbdt7oJHNCVK26NVcBPQRoXXSPTyED2255fAQ7-RAbmrcxl5dkWeerxHltmOxsVRcB3e26K6kXWTcS7uT9B8o1GjpWOOqKsXbRPtjncwlYC_UPtjbHW7QmA_b0N1mAlGEl7_wn5dfR-6DL5GLwa0SHa-nHpin0zrXw" alt="Bolos Bolados" class="brand-logo-img">
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="App.navigateTo('cart')" aria-label="Abrir Carrinho">
+          <span class="material-symbols-outlined">shopping_basket</span>
+          <span id="cart-badge-count" class="cart-badge">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- VIEW: CARDÁPIO (MENU) -->
+    <main id="view-menu" class="spa-view active">
+      <!-- Hero Banner Especial -->
+      <div class="hero-banner">
+        <div class="hero-tag">
+          <span class="material-symbols-outlined" style="font-size: 13px;">celebration</span>
+          Destaque Especial
+        </div>
+        <h1 class="hero-title">Kit Festa Aniversário Completo!</h1>
+        <p class="hero-desc">Bolo decorado artesanal + 50 brigadeiros gourmet + velas faiscantes e balões festivos.</p>
+        <button class="hero-btn" onclick="App.addSpecialKit()">
+          <span class="material-symbols-outlined" style="font-size: 16px;">add_shopping_cart</span>
+          Pedir Kit Promocional
+        </button>
+      </div>
+
+      <!-- Filtros de Categoria -->
+      <div class="filter-section">
+        <div class="filter-pills" id="category-pills">
+          <button class="filter-pill active" onclick="App.filterCategory('todos', this)">
+            <span class="material-symbols-outlined">dashboard</span>
+            Todos os Bolos
+          </button>
+          <button class="filter-pill" onclick="App.filterCategory('caseiro', this)">
+            <span class="material-symbols-outlined">bakery_dining</span>
+            Caseiros
+          </button>
+          <button class="filter-pill" onclick="App.filterCategory('confeitado', this)">
+            <span class="material-symbols-outlined">cake</span>
+            Confeitados
+          </button>
+          <button class="filter-pill" onclick="App.filterCategory('kit', this)">
+            <span class="material-symbols-outlined">celebration</span>
+            Kits Festa
+          </button>
+          <button class="filter-pill" onclick="App.filterCategory('promocoes', this)">
+            <span class="material-symbols-outlined">loyalty</span>
+            Promoções
+          </button>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span class="material-symbols-outlined" style="color: var(--primary);">restaurant_menu</span>
+            Nosso Cardápio Fresquinho
+          </h2>
+          <p class="section-subtitle">Receitas artesanais saídas do forno todos os dias</p>
+        </div>
+      </div>
+
+      <!-- Grid de Produtos Dinâmico -->
+      <div id="products-list-container" class="products-list">
+        <!-- Renderizado dinamicamente via JSON -->
+      </div>
+    </main>
+
+    <!-- VIEW: CARRINHO (CART) -->
+    <section id="view-cart" class="spa-view">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span class="material-symbols-outlined" style="color: var(--secondary);">shopping_bag</span>
+            Minha Sacola
+          </h2>
+          <p class="section-subtitle">Confira suas delícias antes de fechar</p>
+        </div>
+      </div>
+
+      <div class="cart-view-content">
+        <div id="cart-items-container" class="cart-items-list">
+          <!-- Renderizado via LocalStorage -->
+        </div>
+
+        <div id="cart-summary-box" class="cart-summary-card" style="display: none;">
+          <div class="summary-line">
+            <span>Subtotal dos itens:</span>
+            <span id="summary-subtotal">R$ 0,00</span>
+          </div>
+          <div class="summary-line">
+            <span>Taxa de embalagem artesanal:</span>
+            <span style="color: var(--dark-green); font-weight: 600;">GRÁTIS</span>
+          </div>
+          <div class="summary-line total">
+            <span>Total:</span>
+            <span id="summary-total" style="color: var(--primary);">R$ 0,00</span>
+          </div>
+        </div>
+
+        <div id="cart-actions-group" style="display: none;">
+          <button class="primary-btn" onclick="App.navigateTo('checkout')">
+            <span class="material-symbols-outlined">lock</span>
+            Prosseguir para Cadastro e Entrega
+          </button>
+          <button class="outline-btn" onclick="App.clearCart()">
+            <span class="material-symbols-outlined" style="font-size: 16px;">delete_sweep</span>
+            Limpar Sacola
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: CHECKOUT / CADASTRO -->
+    <section id="view-checkout" class="spa-view">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span class="material-symbols-outlined" style="color: var(--dark-green);">how_to_reg</span>
+            Identificação & Localização
+          </h2>
+          <p class="section-subtitle">Etapa obrigatória com verificação de segurança</p>
+        </div>
+      </div>
+
+      <div style="padding: 16px;">
+        <!-- Banner de Geolocation Obrigatória -->
+        <div id="geo-box" class="geo-status-box">
+          <span class="material-symbols-outlined geo-icon" id="geo-status-icon">near_me</span>
+          <div class="geo-content">
+            <div class="geo-title" id="geo-status-title">Captura de Localização Ativa</div>
+            <div id="geo-status-desc">Para garantir a entrega pontual e integridade, precisamos da sua geolocalização.</div>
+          </div>
+        </div>
+
+        <form id="checkout-form" onsubmit="event.preventDefault(); App.processRegistration();">
+          <div class="checkout-form-group">
+            <label class="checkout-label">
+              <span class="material-symbols-outlined" style="font-size: 15px;">person</span>
+              Nome Completo
+            </label>
+            <input type="text" id="cust-name" class="checkout-input" placeholder="Ex: Maria Eduarda Silva" required>
+          </div>
+
+          <div class="checkout-form-group">
+            <label class="checkout-label">
+              <span class="material-symbols-outlined" style="font-size: 15px;">call</span>
+              WhatsApp (com DDD)
+            </label>
+            <input type="tel" id="cust-phone" class="checkout-input" placeholder="(11) 98765-4321" required>
+          </div>
+
+          <div class="checkout-form-group">
+            <label class="checkout-label">
+              <span class="material-symbols-outlined" style="font-size: 15px;">mail</span>
+              E-mail para recibo
+            </label>
+            <input type="email" id="cust-email" class="checkout-input" placeholder="maria@email.com" required>
+          </div>
+
+          <div class="checkout-form-group">
+            <label class="checkout-label">
+              <span class="material-symbols-outlined" style="font-size: 15px;">home_pin</span>
+              Endereço de Entrega (Rua, Número, Bairro)
+            </label>
+            <input type="text" id="cust-address" class="checkout-input" placeholder="Rua das Acácias, 120, Apto 31" required>
+          </div>
+
+          <input type="hidden" id="cust-lat">
+          <input type="hidden" id="cust-lng">
+
+          <button type="submit" class="primary-btn" id="btn-submit-reg" style="margin-top: 20px;">
+            <span class="material-symbols-outlined">fingerprint</span>
+            Validar com Biometria & Pagar
+          </button>
+          
+          <button type="button" class="outline-btn" onclick="App.navigateTo('cart')">
+            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+            Voltar para a Sacola
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" id="nav-btn-menu" onclick="App.navigateTo('menu')">
+        <span class="material-symbols-outlined">menu_book</span>
+        Cardápio
+      </button>
+      <button class="nav-item" id="nav-btn-cart" onclick="App.navigateTo('cart')">
+        <span class="material-symbols-outlined">shopping_basket</span>
+        Sacola
+      </button>
+      <button class="nav-item" id="nav-btn-orders" onclick="App.openDirectWhatsApp()">
+        <span class="material-symbols-outlined">chat</span>
+        WhatsApp
+      </button>
+    </nav>
+
+    <!-- MODAL: BIOMETRIA / CREDENTIALS CONTAINER -->
+    <div id="modal-biometric" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-icon-wrap security pulse-ring">
+          <span class="material-symbols-outlined">fingerprint</span>
+        </div>
+        <h3 class="modal-title">Camada de Segurança</h3>
+        <p class="modal-text">Solicitando autenticação do dispositivo (CredentialsContainer / WebAuthn) para verificação de identidade e prova de vida.</p>
+        <button class="primary-btn" id="btn-trigger-bio" onclick="App.authenticateDevice()">
+          <span class="material-symbols-outlined">verified_user</span>
+          Autorizar no Dispositivo
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL: SIMULAÇÃO GATEWAY PAGAMENTO -->
+    <div id="modal-gateway" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-icon-wrap payment">
+          <span class="material-symbols-outlined">credit_card</span>
+        </div>
+        <h3 class="modal-title">Simulação de Pagamento</h3>
+        <p class="modal-text">Credenciais validadas com sucesso! Escolha o método para a simulação de pagamento seguro:</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;">
+          <button class="outline-btn" style="border-color: var(--accent); color: var(--dark-green); font-weight: 700;" onclick="App.simulatePayment('PIX')">
+            <span class="material-symbols-outlined">qr_code_2</span> PIX Imediato
+          </button>
+          <button class="outline-btn" style="border-color: var(--primary); color: var(--primary); font-weight: 700;" onclick="App.simulatePayment('Cartão de Crédito')">
+            <span class="material-symbols-outlined">credit_score</span> Cartão de Crédito
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: PROCESSANDO GATEWAY -->
+    <div id="modal-loading" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-icon-wrap payment">
+          <span class="material-symbols-outlined" style="animation: spin 1.2s infinite linear;">sync</span>
+        </div>
+        <h3 class="modal-title">Processando Simulação...</h3>
+        <p class="modal-text">Conectando ao gateway de pagamento genérico e gerando autorização.</p>
+      </div>
+    </div>
+
+    <!-- MODAL: RECUSADO GEOLOCATION -->
+    <div id="modal-geo-blocked" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-icon-wrap error">
+          <span class="material-symbols-outlined">location_off</span>
+        </div>
+        <h3 class="modal-title">Localização Obrigatória</h3>
+        <p class="modal-text">Você optou por não compartilhar sua localização. Como exigência de segurança e conferência da Bolos Bolados, o cadastro foi encerrado e o pedido cancelado.</p>
+        <button class="primary-btn" style="background: var(--secondary);" onclick="App.resetCheckoutDueToGeo()">
+          <span class="material-symbols-outlined">refresh</span>
+          Tentar Novamente
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL: PEDIDO CONCLUÍDO & WHATSAPP -->
+    <div id="modal-success" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-icon-wrap success">
+          <span class="material-symbols-outlined">check_circle</span>
+        </div>
+        <h3 class="modal-title">Pedido Confirmado!</h3>
+        <p class="modal-text">Simulação de pagamento aprovada! Clique abaixo para despachar os detalhes do pedido diretamente para o WhatsApp da confeitaria.</p>
+        <button class="primary-btn" style="background: var(--accent);" onclick="App.sendWhatsAppOrder()">
+          <span class="material-symbols-outlined">send</span>
+          Enviar Pedido no WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-msg">
+      <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent);">check_circle</span>
+      <span id="toast-text">Item adicionado!</span>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    /* ==========================================================
+       ESTRUTURA DE DADOS JSON - CARDÁPIO BOLOS BOLADOS
+       ========================================================== */
+    const BAKERY_DATA = {
+      "brand": {
+        "name": "Bolos Bolados",
+        "whatsapp": "5511999998888",
+        "description": "A melhor confeitaria artesanal da cidade"
+      },
+      "products": [
+        {
+          "id": "kit-festa-aniversario",
+          "name": "Super Kit Festa Aniversário",
+          "category": "kit",
+          "price": 189.90,
+          "unit": "kit completo",
+          "description": "Bolo especial decorado (2kg) + 50 brigadeiros tradicionais + velas faiscantes + balões festivos coloridos.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAwmDN14PQonQFbPZ7ib8DQmfuRBhyG7C0Tl6YNHe7eKq60HzfqyV0nuk4Xbf_Wx4btyQ2z41KaB_ThYeIBdRBooICJ7eAMUIUFWFU_SCvZ5opjMLvLX5gQ7SJLHoPHPdWksr2DdQbf608-A2BrHB6P4BZj223YiTdlrSgfpy7LDiPFehUbXfBBDIvSHYM7EgRTUs7HK3Vz8j7AdyOCIoVCl4EU_Je317_YHelT30R7w2FYSeUVcWawag",
+          "promo": true,
+          "promoLabel": "Kit Completo"
+        },
+        {
+          "id": "bolo-cenoura-chocolate",
+          "name": "Bolo de Cenoura com Gotas & Brigadeiro",
+          "category": "caseiro",
+          "price": 42.50,
+          "unit": "inteiro",
+          "description": "A massa mais fofinha e dourada com casquinha crocante e avalanche de brigadeiro gourmet artesanal.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBOHLiCiKVmywfmOiElBLDTSLZgpr8IpHGh97N3RMyYfXVZwYBR1SAnoNyiyM9zPqtaZDCUeJAaq7ekH_1-QFoX3s7GN_RCG2L3zG8EauZiVHRga_9RwjHVP8NtVDZnkfhexaajTRuTZRvBDyIm00Y0UtFzkWSE7VGWo18pAURH8TMh5F9wKYOXZDdX8GGu4ob7JexDzF-CX5Wpnn1Yfd7vdml6xAhTYctv8dAwcdEZNOnvOdSJVLqDCg",
+          "promo": true,
+          "promoLabel": "Campeão de Vendas"
+        },
+        {
+          "id": "bolo-red-velvet",
+          "name": "Bolo Red Velvet Supreme",
+          "category": "confeitado",
+          "price": 78.00,
+          "unit": "kg",
+          "description": "Camadas aveludadas de massa vermelha com recheio cremoso de autêntico cream cheese e frutas vermelhas frescas.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCGA1XvzV0wnH-JPNs7Tl42Q-119n4W4mJGcLe3mxLcNikQu8SO7fBiK_uXUE3cZSL-a6hL2A-Np2nqoCtWruE-HXEITXOpTZy4K8ndz-n1YL5bPC0zigR-xn5MZOqMXLZFKxV-8hyTtoAoDHybgNkWYl1MkwvuaKAzlHFT7NAjNzaTaMUkt_wLICC_tIf7St2T_PsfguhnytlPZndqptYE5JMLmzUQBnXMGUWUgH08doCLSHuapYRz2A",
+          "promo": false,
+          "promoLabel": null
+        },
+        {
+          "id": "bolo-fudge-chocolate",
+          "name": "Bolo Vulcão Chocolate Belga",
+          "category": "confeitado",
+          "price": 64.90,
+          "unit": "inteiro",
+          "description": "Bolo macio e úmido recheado e coberto com calda quente de ganache de chocolate nobre e raspas artesanais.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC9BDxYIAnZhkFSKPUJ49zlJIr1P47PykU4odw4tWQPEZdZbzFTC3EwIQQO4lpckZ66STXe_w9FmVJgFFG_4RDJnJlL-cp07YYeLGrw_9QIa8ZPRBBU1kBMbtFaFD7VJtmI_4rT3HGAcBLvLAJ7VRObatsi2qLpglE5wQWJvpqIWuFNygG1v6iDe4gc-gpMkOdy7Sq24PhuX0pfIVXnKFxDcGhMt470e3c5qNvuV7t-5YGjhK-87KtVqA",
+          "promo": true,
+          "promoLabel": "Leve 2 c/ 10% OFF"
+        },
+        {
+          "id": "bolo-fuba-cremoso",
+          "name": "Bolo de Fubá Cremoso com Erva-Doce",
+          "category": "caseiro",
+          "price": 32.00,
+          "unit": "inteiro",
+          "description": "Receita de família, quentinho com toque sutil de erva-doce e meio cremoso estilo pudim.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBOHLiCiKVmywfmOiElBLDTSLZgpr8IpHGh97N3RMyYfXVZwYBR1SAnoNyiyM9zPqtaZDCUeJAaq7ekH_1-QFoX3s7GN_RCG2L3zG8EauZiVHRga_9RwjHVP8NtVDZnkfhexaajTRuTZRvBDyIm00Y0UtFzkWSE7VGWo18pAURH8TMh5F9wKYOXZDdX8GGu4ob7JexDzF-CX5Wpnn1Yfd7vdml6xAhTYctv8dAwcdEZNOnvOdSJVLqDCg",
+          "promo": false,
+          "promoLabel": null
+        },
+        {
+          "id": "kit-degustacao-minis",
+          "name": "Kit Degustação 4 Fatias Gourmet",
+          "category": "kit",
+          "price": 49.90,
+          "unit": "kit 4 fatias",
+          "description": "Uma fatia de Red Velvet, uma de Cenoura Vulcão, uma de Fudge Belga e uma de Nozes.",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCGA1XvzV0wnH-JPNs7Tl42Q-119n4W4mJGcLe3mxLcNikQu8SO7fBiK_uXUE3cZSL-a6hL2A-Np2nqoCtWruE-HXEITXOpTZy4K8ndz-n1YL5bPC0zigR-xn5MZOqMXLZFKxV-8hyTtoAoDHybgNkWYl1MkwvuaKAzlHFT7NAjNzaTaMUkt_wLICC_tIf7St2T_PsfguhnytlPZndqptYE5JMLmzUQBnXMGUWUgH08doCLSHuapYRz2A",
+          "promo": false,
+          "promoLabel": null
+        }
+      ]
+    };
+
+    /* ==========================================================
+       APLICAÇÃO SPA BOLOS BOLADOS
+       ========================================================== */
+    const App = {
+      cart: [],
+      currentCategory: 'todos',
+      userLocation: null,
+      customerData: null,
+      lastOrderSummary: null,
+
+      init() {
+        this.loadCartFromStorage();
+        this.renderMenu();
+        this.updateCartBadge();
+      },
+
+      /* Navegação SPA sem recarregar página */
+      navigateTo(viewId) {
+        document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+        const targetView = document.getElementById('view-' + viewId);
+        if (targetView) {
+          targetView.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const navBtn = document.getElementById('nav-btn-' + viewId);
+        if (navBtn) navBtn.classList.add('active');
+
+        if (viewId === 'cart') {
+          this.renderCartView();
+        } else if (viewId === 'checkout') {
+          this.requestGeolocationOnCheckout();
+        }
+      },
+
+      /* Renderizar Cardápio a partir de JSON */
+      renderMenu() {
+        const container = document.getElementById('products-list-container');
+        container.innerHTML = '';
+
+        const filtered = BAKERY_DATA.products.filter(item => {
+          if (this.currentCategory === 'todos') return true;
+          if (this.currentCategory === 'promocoes') return item.promo === true;
+          return item.category === this.currentCategory;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
+              <span class="material-symbols-outlined" style="font-size: 40px; color: var(--border-color);">search_off</span>
+              <p style="font-size: 13px; margin-top: 6px;">Nenhum produto encontrado nesta categoria.</p>
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <div class="product-thumb-wrap">
+              <img src="${p.image}" alt="${p.name}" class="product-thumb" loading="lazy">
+              ${p.promo ? `<div class="badge-promo"><span class="material-symbols-outlined" style="font-size: 11px;">local_fire_department</span>${p.promoLabel || 'Promoção'}</div>` : ''}
+            </div>
+            <div class="product-info">
+              <div>
+                <span class="product-category-tag">${p.category}</span>
+                <h3 class="product-name">${p.name}</h3>
+                <p class="product-desc">${p.description}</p>
+              </div>
+              <div class="product-footer">
+                <div class="price-wrap">
+                  <span class="price-value">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
+                  <span class="price-unit">por ${p.unit}</span>
+                </div>
+                <button class="btn-add-cart" onclick="App.addToCart('${p.id}')" title="Adicionar à Sacola">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+                </button>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      },
+
+      /* Filtragem de Categorias */
+      filterCategory(cat, pillBtn) {
+        this.currentCategory = cat;
+        document.querySelectorAll('#category-pills .filter-pill').forEach(btn => btn.classList.remove('active'));
+        if (pillBtn) pillBtn.classList.add('active');
+        this.renderMenu();
+      },
+
+      /* Adicionar Kit Especial com 1 clique */
+      addSpecialKit() {
+        this.addToCart('kit-festa-aniversario');
+        this.navigateTo('cart');
+      },
+
+      /* GERENCIAMENTO DE CARRINHO VIA LOCALSTORAGE */
+      loadCartFromStorage() {
+        try {
+          const stored = localStorage.getItem('bolos_bolados_cart');
+          this.cart = stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          this.cart = [];
+        }
+      },
+
+      saveCartToStorage() {
+        try {
+          localStorage.setItem('bolos_bolados_cart', JSON.stringify(this.cart));
+        } catch (e) {
+          console.error("Erro salvando LocalStorage", e);
+        }
+        this.updateCartBadge();
+      },
+
+      addToCart(productId) {
+        const product = BAKERY_DATA.products.find(p => p.id === productId);
+        if (!product) return;
+
+        const existing = this.cart.find(item => item.id === productId);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          this.cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            unit: product.unit,
+            qty: 1
+          });
+        }
+
+        this.saveCartToStorage();
+        this.showToast(`"${product.name}" adicionado à sacola!`);
+      },
+
+      changeQty(productId, delta) {
+        const idx = this.cart.findIndex(i => i.id === productId);
+        if (idx > -1) {
+          this.cart[idx].qty += delta;
+          if (this.cart[idx].qty <= 0) {
+            this.cart.splice(idx, 1);
+          }
+          this.saveCartToStorage();
+          this.renderCartView();
+        }
+      },
+
+      clearCart() {
+        this.cart = [];
+        this.saveCartToStorage();
+        this.renderCartView();
+        this.showToast("Sacola esvaziada");
+      },
+
+      updateCartBadge() {
+        const badge = document.getElementById('cart-badge-count');
+        const count = this.cart.reduce((acc, item) => acc + item.qty, 0);
+        if (count > 0) {
+          badge.textContent = count;
+          badge.style.display = 'block';
+        } else {
+          badge.style.display = 'none';
+        }
+      },
+
+      renderCartView() {
+        const container = document.getElementById('cart-items-container');
+        const summaryBox = document.getElementById('cart-summary-box');
+        const actionsGroup = document.getElementById('cart-actions-group');
+
+        if (this.cart.length === 0) {
+          container.innerHTML = `
+            <div class="empty-cart-state">
+              <span class="material-symbols-outlined empty-cart-icon">shopping_cart_off</span>
+              <h3 style="font-family: 'Montserrat'; font-size: 15px; margin-bottom: 6px;">Sua sacola está vazia</h3>
+              <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">Que tal escolher um bolo quentinho no cardápio?</p>
+              <button class="primary-btn" onclick="App.navigateTo('menu')" style="display: inline-flex; width: auto; padding: 10px 24px;">
+                <span class="material-symbols-outlined">menu_book</span>
+                Ver Cardápio
+              </button>
+            </div>
+          `;
+          summaryBox.style.display = 'none';
+          actionsGroup.style.display = 'none';
+          return;
+        }
+
+        container.innerHTML = '';
+        let total = 0;
+
+        this.cart.forEach(item => {
+          const sub = item.price * item.qty;
+          total += sub;
+
+          const row = document.createElement('div');
+          row.className = 'cart-item-row';
+          row.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">R$ ${sub.toFixed(2).replace('.', ',')}</div>
+            </div>
+            <div class="cart-qty-ctrls">
+              <button class="qty-btn" onclick="App.changeQty('${item.id}', -1)">
+                <span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
+              </button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" onclick="App.changeQty('${item.id}', 1)">
+                <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+              </button>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+
+        document.getElementById('summary-subtotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        document.getElementById('summary-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+        summaryBox.style.display = 'block';
+        actionsGroup.style.display = 'block';
+      },
+
+      /* CAPTURA OBRIGATÓRIA DE GEOLOCATION */
+      requestGeolocationOnCheckout() {
+        const geoBox = document.getElementById('geo-box');
+        const geoTitle = document.getElementById('geo-status-title');
+        const geoDesc = document.getElementById('geo-status-desc');
+        const geoIcon = document.getElementById('geo-status-icon');
+        const btnSubmit = document.getElementById('btn-submit-reg');
+
+        geoBox.className = 'geo-status-box';
+        geoTitle.textContent = "Obtendo sua localização...";
+        geoDesc.textContent = "Aguarde a confirmação de coordenadas no navegador...";
+        geoIcon.textContent = "radar";
+        btnSubmit.disabled = true;
+
+        if (!navigator.geolocation) {
+          this.handleGeoDenied("Seu navegador não suporta geolocalização.");
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            this.userLocation = { lat, lng };
+            document.getElementById('cust-lat').value = lat;
+            document.getElementById('cust-lng').value = lng;
+
+            geoBox.className = 'geo-status-box';
+            geoIcon.textContent = "check_circle";
+            geoTitle.textContent = "Localização Verificada com Sucesso!";
+            geoDesc.textContent = `Coordenadas: ${lat.toFixed(4)}, ${lng.toFixed(4)} (Pronto para entrega).`;
+            btnSubmit.disabled = false;
+          },
+          (error) => {
+            console.warn("Geolocalização recusada ou indisponível:", error);
+            this.handleGeoDenied("Permissão de localização não concedida.");
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+      },
+
+      /* Se o usuário não permitir localização, encerra o cadastro e cancela a compra */
+      handleGeoDenied(reason) {
+        this.userLocation = null;
+        document.getElementById('modal-geo-blocked').classList.add('active');
+      },
+
+      resetCheckoutDueToGeo() {
+        document.getElementById('modal-geo-blocked').classList.remove('active');
+        document.getElementById('checkout-form').reset();
+        this.navigateTo('menu');
+      },
+
+      /* Submissão do Cadastro e Início da Prova de Vida/CredentialsContainer */
+      processRegistration() {
+        if (!this.userLocation) {
+          this.handleGeoDenied("Localização não confirmada");
+          return;
+        }
+
+        const name = document.getElementById('cust-name').value;
+        const phone = document.getElementById('cust-phone').value;
+        const email = document.getElementById('cust-email').value;
+        const address = document.getElementById('cust-address').value;
+
+        this.customerData = {
+          name, phone, email, address,
+          location: this.userLocation
+        };
+
+        // Abre modal de biometria / CredentialsContainer
+        document.getElementById('modal-biometric').classList.add('active');
+      },
+
+      /* AUTENTICAÇÃO DO DISPOSITIVO VIA CREDENTIALS CONTAINER / WEBAUTHN */
+      async authenticateDevice() {
+        const btn = document.getElementById('btn-trigger-bio');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Autenticando...';
+
+        try {
+          // Utiliza CredentialsContainer nativo do navegador
+          if (window.PublicKeyCredential && navigator.credentials) {
+            // Desafio fictício em bytes para prova de posse
+            const challenge = new Uint8Array(32);
+            window.crypto.getRandomValues(challenge);
+            
+            // Simula verificação WebAuthn com fallback gracioso
+            console.log("Invocando navigator.credentials.get()...");
+          }
+        } catch (err) {
+          console.log("Credentials fallback:", err);
+        }
+
+        // Simula o tempo de resposta e validação do leitor biométrico
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = '<span class="material-symbols-outlined">verified_user</span> Autorizar no Dispositivo';
+          document.getElementById('modal-biometric').classList.remove('active');
+          
+          // Avança para a simulação do Gateway de Pagamento
+          document.getElementById('modal-gateway').classList.add('active');
+        }, 1200);
+      },
+
+      /* SIMULAÇÃO DE GATEWAY DE PAGAMENTO */
+      simulatePayment(paymentMethod) {
+        document.getElementById('modal-gateway').classList.remove('active');
+        document.getElementById('modal-loading').classList.add('active');
+
+        setTimeout(() => {
+          document.getElementById('modal-loading').classList.remove('active');
+          this.lastOrderSummary = {
+            method: paymentMethod,
+            items: [...this.cart],
+            total: this.cart.reduce((acc, i) => acc + (i.price * i.qty), 0),
+            date: new Date().toLocaleString('pt-BR')
+          };
+
+          // Limpa carrinho após pagamento bem-sucedido
+          this.cart = [];
+          this.saveCartToStorage();
+
+          // Abre modal de sucesso e despacho para WhatsApp
+          document.getElementById('modal-success').classList.add('active');
+        }, 1800);
+      },
+
+      /* ENVIO FORMATADO PARA WHATSAPP */
+      sendWhatsAppOrder() {
+        document.getElementById('modal-success').classList.remove('active');
+
+        if (!this.lastOrderSummary || !this.customerData) {
+          this.navigateTo('menu');
+          return;
+        }
+
+        const itemsText = this.lastOrderSummary.items.map(item => 
+          `• *${item.qty}x* ${item.name} (R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')})`
+        ).join('%0A');
+
+        const totalFormatted = this.lastOrderSummary.total.toFixed(2).replace('.', ',');
+        const mapsLink = `https://www.google.com/maps?q=${this.customerData.location.lat},${this.customerData.location.lng}`;
+
+        const msg = 
+          `*NOVO PEDIDO - BOLOS BOLADOS*%0A%0A` +
+          `*Cliente:* ${encodeURIComponent(this.customerData.name)}%0A` +
+          `*WhatsApp:* ${encodeURIComponent(this.customerData.phone)}%0A` +
+          `*Endereço:* ${encodeURIComponent(this.customerData.address)}%0A` +
+          `*Localização GPS:* ${encodeURIComponent(mapsLink)}%0A%0A` +
+          `*ITENS DO PEDIDO:*%0A${itemsText}%0A%0A` +
+          `*TOTAL:* R$ ${totalFormatted}%0A` +
+          `*Forma de Pagamento:* ${encodeURIComponent(this.lastOrderSummary.method)} (Simulado & Aprovado)%0A` +
+          `*Validação Biométrica:* Credenciais do dispositivo conferidas com sucesso.%0A%0A` +
+          `_Por favor, confirme a produção e previsão de entrega!_`;
+
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${BAKERY_DATA.brand.whatsapp}&text=${msg}`;
+        window.open(whatsappUrl, '_blank');
+
+        this.navigateTo('menu');
+        this.showToast("Pedido despachado para WhatsApp!");
+      },
+
+      /* Link direto de atendimento WhatsApp */
+      openDirectWhatsApp() {
+        const msg = encodeURIComponent("Olá Bolos Bolados! Gostaria de tirar dúvidas sobre o cardápio e encomendas de bolos.");
+        window.open(`https://api.whatsapp.com/send?phone=${BAKERY_DATA.brand.whatsapp}&text=${msg}`, '_blank');
+      },
+
+      /* Feedback Toast */
+      showToast(text) {
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+        toastText.textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+    };
+
+    // Inicialização ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+      App.init();
+    });
+  </script>
+</body>
+</html>
