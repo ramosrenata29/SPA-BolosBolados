@@ -1,0 +1,92 @@
+{
+  "products": [
+    {
+      "id": "bolo-choc-01",
+      "name": "Bolo Ninho com Nutella e Cacau Integrado",
+      "category": "confeitado",
+      "price": 68.90,
+      "unit": "kg",
+      "description": "Massa de cacau 100% recheada com brigadeiro gourmet de Leite Ninho e camada generosa de Nutella pura.",
+      "image": "app/themes/delicious_artisanal_homemade_carrot_cake_with_chocolate_dripping_frosting/screen.png",
+      "promo": true,
+      "promoLabel": "Mais Vendido"
+    },
+    {
+      "id": "bolo-cenoura-01",
+      "name": "Bolo Caseiro de Cenoura com Vulcão de Brigadeiro",
+      "category": "caseiro",
+      "price": 38.50,
+      "unit": "inteiro",
+      "description": "Massa fofinha de cenoura fresca com cobertura vulcânica de brigadeiro de colher e granulado belga.",
+      "image": "app/themes/delicious_artisanal_homemade_carrot_cake_with_chocolate_dripping_frosting/screen.png",
+      "promo": false,
+      "promoLabel": ""
+    },
+    {
+      "id": "bolo-redvelvet-01",
+      "name": "Red Velvet Artesanal com Cream Cheese e Frutas Vermelhas",
+      "category": "confeitado",
+      "price": 75.00,
+      "unit": "kg",
+      "description": "Aclamação clássica com massa aveludada de baunilha e cacau, recheio suave de cream cheese e frutas frescas.",
+      "image": "app/themes/exquisite_red_velvet_cake_with_creamy_cream_cheese_frosting_and_berries/screen.png",
+      "promo": true,
+      "promoLabel": "Destaque da Semana"
+    },
+    {
+      "id": "kit-festa-01",
+      "name": "Kit Festa Aniversário Completo",
+      "category": "kit",
+      "price": 189.90,
+      "unit": "kit",
+      "description": "Inclui 1 Bolo Confeitado (1.5kg), 25 Brigadeiros Gourmet, 25 Beijinhos, Velas Especiais e Balões Personalizados.",
+      "image": "app/themes/festive_birthday_party_kit_with_chocolate_decorated_cake_brigadeiros_party/screen.png",
+      "promo": true,
+      "promoLabel": "Oferta Especial Kit"
+    },
+    {
+      "id": "bolo-fuba-01",
+      "name": "Bolo Caseiro de Fubá com Goiabada Cremosa",
+      "category": "caseiro",
+      "price": 32.00,
+      "unit": "inteiro",
+      "description": "Receita tradicional de vó, massa úmida de fubá artesanal com pedaços derretidos de goiabada cascão.",
+      "image": "app/themes/artisanal_confectionery_system/DESIGN.md",
+      "promo": false,
+      "promoLabel": ""
+    },
+    {
+      "id": "bolo-limao-01",
+      "name": "Bolo Mousse de Limão Siciliano",
+      "category": "confeitado",
+      "price": 59.90,
+      "unit": "kg",
+      "description": "Massa leve de iogurte com recheio cremoso e refrescante de mousse de limão siciliano e raspas cítricas.",
+      "image": "app/themes/moist_chocolate_fudge_cake_with_rich_ganache_dripping_cocoa_powder_dust_rustic/screen.png",
+      "promo": false,
+      "promoLabel": ""
+    },
+    {
+      "id": "bolo-fudge-01",
+      "name": "Bolo Fudge de Chocolate Belga & Ganache",
+      "category": "confeitado",
+      "price": 82.00,
+      "unit": "kg",
+      "description": "Bolo denso e super úmido de chocolate 70%, coberto com ganache aveludado e pó de cacau polvilhado.",
+      "image": "app/themes/moist_chocolate_fudge_cake_with_rich_ganache_dripping_cocoa_powder_dust_rustic/screen.png",
+      "promo": true,
+      "promoLabel": "Edição Limitada"
+    },
+    {
+      "id": "kit-festa-02",
+      "name": "Mini Kit Celebração a Dois",
+      "category": "kit",
+      "price": 98.00,
+      "unit": "kit",
+      "description": "Perfeito para comemorações íntimas: 1 Mini Bolo de Brigadeiro (600g) + 12 Docinhos Sortidos + Velinha.",
+      "image": "app/themes/festive_birthday_party_kit_with_chocolate_decorated_cake_brigadeiros_party/screen.png",
+      "promo": false,
+      "promoLabel": ""
+    }
+  ]
+}
