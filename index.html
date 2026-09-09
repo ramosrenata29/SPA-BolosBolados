@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolos Bolados - Confeitaria Artesanal</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header class="app-header">
+    <div class="container header-content">
+      <div class="logo-area">
+        <span class="material-symbols-outlined logo-icon">cake</span>
+        <div>
+          <h1 class="brand-title">Bolos Bolados</h1>
+          <p class="brand-subtitle">Confeitaria Artesanal</p>
+        </div>
+      </div>
+
+      <button id="cart-trigger" class="cart-trigger-btn" aria-label="Abrir Carrinho">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        <span>Carrinho</span>
+        <span id="cart-count-badge" class="cart-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="container">
+    <!-- Category Filters -->
+    <section class="filter-section">
+      <div class="chips-wrapper" id="category-filters">
+        <button class="filter-chip active" data-category="todos">
+          <span class="material-symbols-outlined">grid_view</span>
+          Todos
+        </button>
+        <button class="filter-chip" data-category="caseiro">
+          <span class="material-symbols-outlined">home</span>
+          Caseiros
+        </button>
+        <button class="filter-chip" data-category="confeitado">
+          <span class="material-symbols-outlined">cookie</span>
+          Confeitados
+        </button>
+        <button class="filter-chip" data-category="kit">
+          <span class="material-symbols-outlined">celebration</span>
+          Kits Festa
+        </button>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section>
+      <div class="products-grid" id="products-container">
+        <!-- Cards de produtos serão renderizados dinamicamente via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart Side Drawer -->
+  <div id="drawer-overlay" class="drawer-overlay"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Carrinho de Compras">
+    <div class="drawer-header">
+      <h2 class="drawer-title">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        Seu Carrinho
+      </h2>
+      <button id="close-drawer" class="close-drawer-btn" aria-label="Fechar Carrinho">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <div class="drawer-body" id="cart-items-container">
+      <!-- Itens do carrinho serão populados aqui -->
+    </div>
+
+    <div class="drawer-footer">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">R$ 0,00</span>
+      </div>
+      <div class="cart-summary-row" style="color: var(--color-forest);">
+        <span>Taxa de Entrega</span>
+        <span>A calcular</span>
+      </div>
+      <div class="cart-summary-total">
+        <span>Total</span>
+        <span id="cart-total">R$ 0,00</span>
+      </div>
+
+      <button id="proceed-checkout-btn" class="checkout-btn">
+        <span class="material-symbols-outlined">arrow_forward</span>
+        Finalizar Compra
+      </button>
+    </div>
+  </aside>
+
+  <!-- Checkout & Modal Container -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-card" id="modal-card">
+      <span class="material-symbols-outlined modal-close-icon" id="close-modal-btn">close</span>
+      <div id="modal-step-content">
+        <!-- Conteúdo dos passos (Cadastro/Geo, Autenticação, Pagamento) -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts JS Modulares -->
+  <script src="js/cart.js"></script>
+  <script src="js/location.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

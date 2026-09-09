@@ -1,0 +1,45 @@
+:root {
+  /* Colors from DESIGN.md */
+  --color-primary: #A13700;
+  --color-primary-dark: #7A2800;
+  --color-primary-light: #FFC6B1;
+  --color-secondary: #FA5F57;
+  --color-tertiary: #1BB890;
+  --color-tertiary-dark: #00674F;
+  --color-gold: #D48B00;
+  --color-forest: #256C4B;
+
+  --color-surface-bg: #FFF8F6;
+  --color-card-bg: #FFFFFF;
+  --color-surface-dim: #F6D3C2;
+  --color-border: #EFE8DC;
+  --color-border-dark: #DECFC2;
+
+  --color-text-main: #2D1A10;
+  --color-text-muted: #7A6960;
+  --color-text-on-primary: #FFFFFF;
+
+  --color-error: #BA1A1A;
+  --color-error-container: #FFDAD6;
+
+  /* Fonts */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Raleway', sans-serif;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-base: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(45, 26, 16, 0.04);
+  --shadow-card: 0 4px 20px -2px rgba(45, 26, 16, 0.05);
+  --shadow-hover: 0 12px 30px -4px rgba(45, 26, 16, 0.1);
+  --shadow-modal: 0 24px 48px -8px rgba(45, 26, 16, 0.2);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}
