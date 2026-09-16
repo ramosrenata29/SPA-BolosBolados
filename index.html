@@ -6,7 +6,7 @@
   <title>Bolos Bolados - Confeitaria Artesanal</title>
 
   <!-- PWA: Manifest e Ícones -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#d81b60"> <!-- Sugestão de cor (rosa/confeitaria). Altere para a cor da sua marca -->
   <link rel="apple-touch-icon" href="/icone-192x192.png"> <!-- Lembre-se de colocar um ícone real neste caminho -->
 
@@ -135,7 +135,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('./sw.js')
           .then((registration) => {
             console.log('Service Worker registrado com sucesso! Escopo:', registration.scope);
           })
